@@ -99,16 +99,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFF9747FF), Color(0xFF7C3AED)],
+                  colors: [
+                    Color.fromARGB(255, 249, 249, 250),
+                    Color.fromARGB(255, 36, 163, 247)
+                  ],
                 ),
               ),
               child: Column(
                 children: [
                   Text(
-                    'water',
+                    'Water',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -136,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                 fontSize: 48,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF7C3AED),
+                                color: Color.fromARGB(255, 10, 6, 133),
                               ),
                             ),
                             Text(
@@ -170,11 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '$selectedWaterAmount ml',
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: Color(0xFF7C3AED),
+                                  color: Color.fromARGB(255, 10, 6, 133),
                                 ),
                               ),
                               Icon(Icons.arrow_drop_down,
-                                  color: Color(0xFF7C3AED)),
+                                  color: Color.fromARGB(255, 10, 6, 133)),
                             ],
                           ),
                         ),
@@ -185,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text('Drinking'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          foregroundColor: Color(0xFF7C3AED),
+                          foregroundColor: Color.fromARGB(255, 10, 6, 133),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -212,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: resetHistory,
                     child: Text('Reset History'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF7C3AED),
+                      backgroundColor: Color.fromARGB(255, 36, 163, 247),
                       foregroundColor: Colors.white,
                     ),
                   ),
