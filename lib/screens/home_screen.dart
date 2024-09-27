@@ -9,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentWaterAmount = 400;
+  int currentWaterAmount = 0;
   int goalAmount = 2000;
   int selectedWaterAmount = 100;
   List<String> drinkHistory = [];
