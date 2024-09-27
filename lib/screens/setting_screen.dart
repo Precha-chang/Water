@@ -72,12 +72,12 @@ class _SettingScreenState extends State<SettingScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.close, color: Colors.black),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -224,8 +224,6 @@ class _SettingScreenState extends State<SettingScreen> {
       });
     }
   }
-
-  
 
   void _showReminderIntervalPicker() {
     showModalBottomSheet(
