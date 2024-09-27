@@ -1,46 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // ใช้สำหรับจัดการรูปแบบวันที่และเวลา
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentWaterAmount = 0; // ปริมาณน้ำปัจจุบัน เริ่มที่ 0 ml
-  int goalAmount = 2000; // เป้าหมายการดื่มน้ำ
-  List<String> drinkHistory = []; // รายการประวัติการดื่มน้ำ
+  int currentWaterAmount = 400;
+  int goalAmount = 2000;
+  int selectedWaterAmount = 100;
+  List<String> drinkHistory = [];
+  List<int> waterOptions = [
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    400,
+    500,
+    600
+  ]; // Options for water amount
 
-  // ฟังก์ชันที่ใช้เพิ่มน้ำและตรวจสอบเป้าหมาย
   void addWater(int amount) {
     setState(() {
       currentWaterAmount += amount;
-
-      // เพิ่มประวัติการดื่มน้ำพร้อมเวลาปัจจุบัน
       String currentTime = DateFormat('HH:mm').format(DateTime.now());
-      drinkHistory.add('$currentTime - $amount ml');
+      drinkHistory.insert(0, '$currentTime - $amount ml');
 
-      // ตรวจสอบถ้าถึงเป้าหมายแล้วรีเซ็ตใหม่
       if (currentWaterAmount >= goalAmount) {
-        currentWaterAmount = 0; // รีเซ็ตปริมาณน้ำกลับไปเป็น 0
-        showGoalReachedDialog(); // แสดงการแจ้งเตือนเมื่อถึงเป้าหมาย
-        drinkHistory
-            .add('--- Reached Goal ---'); // เพิ่มบันทึกว่าถึงเป้าหมายแล้ว
+        showGoalReachedDialog();
       }
     });
   }
 
-  // ฟังก์ชันสำหรับรีเซ็ตข้อมูลทั้งหมด
-  void resetData() {
+  void resetHistory() {
     setState(() {
-      currentWaterAmount = 0; // รีเซ็ตปริมาณน้ำกลับเป็น 0
-      drinkHistory.clear(); // ล้างประวัติทั้งหมด
+      drinkHistory.clear();
+      currentWaterAmount = 0;
     });
   }
 
-  // แสดงการแจ้งเตือนเมื่อถึงเป้าหมาย
   void showGoalReachedDialog() {
     showDialog(
       context: context,
@@ -50,9 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           content: Text('You have reached your daily water goal. Great job!'),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // ปิด dialog
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: Text('OK'),
             ),
           ],
@@ -61,168 +62,186 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void showWaterOptionsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Set Water Amount'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: waterOptions.map((amount) {
+              return ListTile(
+                title: Text('$amount ml'),
+                onTap: () {
+                  setState(() {
+                    selectedWaterAmount = amount;
+                  });
+                  Navigator.of(context).pop();
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Water'),
-        backgroundColor: Color(0xFF62B6F7),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                // วงกลมสีฟ้าครอบข้อความ
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF62B6F7), Color(0xFFDCF4FF)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF9747FF), Color(0xFF7C3AED)],
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'water',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: Column(
+                  SizedBox(height: 20),
+                  Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.2),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 180,
+                        height: 180,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$currentWaterAmount',
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF7C3AED),
+                              ),
+                            ),
+                            Text(
+                              'goals $goalAmount ml',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "$currentWaterAmount", // แสดงค่าปริมาณน้ำปัจจุบัน
-                        style: TextStyle(
-                            fontSize: 80,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 0, 8, 78)),
+                      GestureDetector(
+                        onTap: showWaterOptionsDialog,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                '$selectedWaterAmount ml',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFF7C3AED),
+                                ),
+                              ),
+                              Icon(Icons.arrow_drop_down,
+                                  color: Color(0xFF7C3AED)),
+                            ],
+                          ),
+                        ),
                       ),
-                      Text(
-                        "goals $goalAmount ml",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: const Color.fromARGB(255, 0, 8, 78),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () => addWater(selectedWaterAmount),
+                        child: Text('Drinking'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Color(0xFF7C3AED),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    addWater(100); // เพิ่ม 100 ml ทุกครั้งที่กดปุ่ม
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    backgroundColor: Color(0xFF62B6F7),
-                  ),
-                  child: Text(
-                    '100 ml +',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                // ปุ่มรีเซ็ต
-                ElevatedButton(
-                  onPressed: () {
-                    resetData(); // รีเซ็ตข้อมูลเมื่อกดปุ่ม
-                  },
-                  style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 1, 14, 88)),
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFFDCF4FF),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Drinking History',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: resetHistory,
+                    child: Text('Reset History'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF7C3AED),
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.all(20),
                 itemCount: drinkHistory.length,
                 itemBuilder: (context, index) {
-                  return DrinkLogItem(
-                    time: drinkHistory[index].split(' - ')[0],
-                    amount: drinkHistory[index].split(' - ').length > 1
-                        ? drinkHistory[index].split(' - ')[1]
-                        : '', // กรณีถึงเป้าหมายจะไม่มีค่า ml
+                  final entry = drinkHistory[index].split(' - ');
+                  return ListTile(
+                    leading: Icon(Icons.access_time, color: Color(0xFF7C3AED)),
+                    title: Text(entry[0]),
+                    trailing: Text(entry[1]),
                   );
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Message',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
         ],
-        selectedItemColor: Color(0xFF62B6F7),
-      ),
-    );
-  }
-}
-
-class DrinkLogItem extends StatelessWidget {
-  final String time;
-  final String amount;
-
-  DrinkLogItem({required this.time, required this.amount});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            time,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black87,
-            ),
-          ),
-          Text(
-            amount,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black87,
-            ),
-          ),
-        ],
+        selectedItemColor: Color(0xFF7C3AED),
       ),
     );
   }
