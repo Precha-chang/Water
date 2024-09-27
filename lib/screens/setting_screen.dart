@@ -146,7 +146,10 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 69, 151, 218), Color.fromARGB(255, 162, 226, 237)],
+            colors: [
+              Color.fromARGB(255, 69, 151, 218),
+              Color.fromARGB(255, 162, 226, 237)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -180,23 +183,32 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void _showWaterIntakePicker() {
-    showModalBottomSheet(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          child: CupertinoPicker(
-            itemExtent: 32,
-            onSelectedItemChanged: (int index) {
-              setState(() {
-                selectedWaterIntake = (index + 1) * 1000;
-              });
-            },
-            children: List<Widget>.generate(9, (int index) {
-              return Center(
-                child: Text('${(index + 1) * 1000} ml'),
-              );
-            }),
+        return AlertDialog(
+          title: Text('Select Water Intake'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 20,
+              itemBuilder: (BuildContext context, int index) {
+                int value = (index + 1) * 500;
+                return ListTile(
+                  title: Text('${value} ml'),
+                  trailing: selectedWaterIntake == value
+                      ? Icon(Icons.check, color: Colors.blue)
+                      : null,
+                  onTap: () {
+                    setState(() {
+                      selectedWaterIntake = value;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
           ),
         );
       },
@@ -226,23 +238,32 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void _showReminderIntervalPicker() {
-    showModalBottomSheet(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          child: CupertinoPicker(
-            itemExtent: 32,
-            onSelectedItemChanged: (int index) {
-              setState(() {
-                selectedReminderInterval = (index + 1) * 5;
-              });
-            },
-            children: List<Widget>.generate(12, (int index) {
-              return Center(
-                child: Text('${(index + 1) * 5} minute'),
-              );
-            }),
+        return AlertDialog(
+          title: Text('Select Reminder Interval'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 12,
+              itemBuilder: (BuildContext context, int index) {
+                int value = (index + 1) * 5;
+                return ListTile(
+                  title: Text('${value} minutes'),
+                  trailing: selectedReminderInterval == value
+                      ? Icon(Icons.check, color: Colors.blue)
+                      : null,
+                  onTap: () {
+                    setState(() {
+                      selectedReminderInterval = value;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
           ),
         );
       },
