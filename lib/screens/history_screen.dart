@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'package:intl/main.dart';
 import 'package:intl/intl.dart';
 
-
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
@@ -12,11 +11,12 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   DateTime selectedDate = DateTime.now();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF7F7F7), // พื้นหลังสีถนอมสายตา
+      backgroundColor:
+          Color.fromARGB(255, 255, 255, 255), // พื้นหลังสีถนอมสายตา
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -35,7 +35,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Center(
               child: Column(
                 children: [
-                  Image.asset('assets/water.png', width: 100, height: 100), // ไอคอนน้ำ
+                  Image.asset('assets/logo.png',
+                      width: 200, height: 100), // ไอคอนน้ำ
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -44,12 +45,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         icon: Icon(Icons.arrow_back_ios, color: Colors.blue),
                         onPressed: () {
                           setState(() {
-                            selectedDate = selectedDate.subtract(Duration(days: 1));
+                            selectedDate =
+                                selectedDate.subtract(Duration(days: 1));
                           });
                         },
                       ),
                       Text(
-                        DateFormat('d MMM yyyy').format(selectedDate), // แสดงวันที่
+                        DateFormat('d MMM yyyy')
+                            .format(selectedDate), // แสดงวันที่
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
