@@ -238,14 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-        ],
-        selectedItemColor: Color.fromARGB(255, 10, 6, 133),
-      ),
+  
     );
   }
 }
