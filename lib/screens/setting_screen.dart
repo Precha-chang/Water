@@ -146,7 +146,7 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.purple.shade200, Colors.blue.shade200],
+            colors: [Color.fromARGB(255, 69, 151, 218), Color.fromARGB(255, 162, 226, 237)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
