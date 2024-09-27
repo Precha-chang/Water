@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
           BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
         ],
-        selectedItemColor: Color(0xFF7C3AED),
+        selectedItemColor: Color.fromARGB(255, 10, 6, 133),
       ),
     );
   }
