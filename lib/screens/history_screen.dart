@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/main.dart';
 import 'package:intl/intl.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -15,8 +14,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color.fromARGB(255, 255, 255, 255), // พื้นหลังสีถนอมสายตา
+      backgroundColor: Color.fromARGB(255, 255, 255, 255), // พื้นหลังสีขาว
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -50,13 +48,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           });
                         },
                       ),
-                      Text(
-                        DateFormat('d MMM yyyy')
-                            .format(selectedDate), // แสดงวันที่
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                      GestureDetector(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: selectedDate,
+                            firstDate: DateTime(2000), // วันที่เริ่มต้น
+                            lastDate: DateTime(2101), // วันที่สิ้นสุด
+                          );
+
+                          if (pickedDate != null &&
+                              pickedDate != selectedDate) {
+                            setState(() {
+                              selectedDate = pickedDate;
+                            });
+                          }
+                        },
+                        child: Text(
+                          DateFormat('d MMM yyyy')
+                              .format(selectedDate), // แสดงวันที่
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
                         ),
                       ),
                       IconButton(
