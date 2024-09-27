@@ -38,7 +38,7 @@ class MessageScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
+                  const Text(
                     "No worries, we'll send you a notification to you!!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -71,12 +71,12 @@ class MessageScreen extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [Color(0xFFA3D3F2), Color(0xFF5DADE2)], // ไล่สีน้ำเงิน
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10,
@@ -85,20 +85,22 @@ class MessageScreen extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        leading: Icon(Icons.notifications, color: Colors.white, size: 30),
-        title: Text(
+        leading: Icon(Icons.notifications, color: Colors.white, size: 35),
+        title: const Text(
           'Time to Drink!!',
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Color.fromARGB(255, 15, 12, 12),
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle: Text(
           time,
-          style: TextStyle(
+          textAlign: TextAlign.center,
+          style: const TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 18,
           ),
         ),
       ),
