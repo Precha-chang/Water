@@ -78,7 +78,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(vertical: 10),
-              color: Colors.blue.shade100,
+              color: Color.fromARGB(255, 84, 167, 236),
               child: Text(
                 'History',
                 style: TextStyle(
