@@ -103,12 +103,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   // ฟังก์ชันสร้างรายการประวัติดื่มน้ำ
   List<Widget> _buildHistoryItems() {
     List<String> dates = [
-      '20 may 2024',
-      '19 may 2024',
-      '18 may 2024',
-      '17 may 2024',
-      '16 may 2024',
-      '15 may 2024',
+      '1 Oct 2024',
     ];
 
     List<Widget> items = dates.map((date) {
@@ -125,7 +120,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
             Text(
-              '600 ml',
+              '2000 ml',
               style: TextStyle(
                 fontSize: 16,
               ),

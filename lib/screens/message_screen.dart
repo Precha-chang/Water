@@ -53,10 +53,8 @@ class MessageScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  timeCard('8:00 AM'),
-                  timeCard('9:30 AM'),
-                  timeCard('1:30 PM'),
-                  timeCard('10:00 PM'),
+                  timeCard('7:00 PM'),
+                  timeCard('7:30 PM'),
                 ],
               ),
             ),
